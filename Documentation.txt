@@ -1,0 +1,56 @@
+In this Documentation, we will be looking at how to deploy the app.py and its endpoints
+
+1) Download AWS CLI
+2) Create a S3 bucket, upload:
+  - The Model (finalized_random_forest_model.pkl)
+  - The app.py file
+  - The design.html file
+3) Start EC2 Instance with all the important permissions:
+  - SSH port 22
+  - HTTP port 80
+  - Custom TCP port 5000
+
+4) Upload to the EC2 instance via s3 bucket command:
+  - aws s3 cp s3://s3 bucket name/file /home/ec2-user/
+All the files that were in bucket
+Upload "design.html" into a separate folder called "templates"
+
+5) Download Python and Pip on the EC2 Instance (when using python3 and Python remember to update the symlink as there might be discrepancies in the versions)
+6) pip install:
+ - Requests
+ - Flask
+ - Scikit-learn (version 1.3.2) ==> available only on Python 3.8 and newer
+ - Joblib
+
+7) run the server with this command: flask --app app run --host=0.0.0.0
+8) Navigate to the blank endpoint on your browser to find a form
+  - The form needs a driver's ID
+  - Qualifying Position
+  - q1, q2, q3 times
+  - If he got a Grid Penalty
+  - Years of Experience
+
+All the values are integers (except for the Grid Penalty)
+
+The list of Drivers and driverID are in "activedrivers 1.csv"
+
+DriverID  DriverRef
+1         Hamilton
+4         Alonso
+830       Verstappen
+825       Magnussen        
+842       Gasly
+807       Hulkenberg
+815       Perez
+817       Ricciardo
+822       Bottas
+832       Sainz
+839       Ocon
+840       Stroll
+844       Leclerc
+846       Norris
+847       Russell
+848       Albon
+855       Tsunoda
+857       Zhou
+858       Sargeant

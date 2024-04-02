@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Prediction</title>
+</head>
+<body>
+    <h1>Race Prediction Form</h1>
+    <form action="/predict" method="post" id="predictionForm">
+        <label for="driverId">Driver ID:</label>
+        <input type="number" id="driverId" name="driverId"><br>
+        
+        <label for="qualiResultPosition">Quali Result Position:</label>
+        <input type="number" id="qualiResultPosition" name="qualiResultPosition"><br>
+        
+        <label for="q1Msec">Q1 Time (msec):</label>
+        <input type="number" id="q1Msec" name="q1Msec"><br>
+        
+        <label for="q2Msec">Q2 Time (msec):</label>
+        <input type="number" id="q2Msec" name="q2Msec"><br>
+        
+        <label for="q3Msec">Q3 Time (msec):</label>
+        <input type="number" id="q3Msec" name="q3Msec"><br>
+        
+        <label for="gridPenalty">Grid Penalty:</label>
+        <input type="checkbox" id="gridPenalty" name="gridPenalty"><br>
+        
+        <label for="driverExpYears">Driver Experience Years:</label>
+        <input type="number" id="driverExpYears" name="driverExpYears"><br>
+        
+        <input type="submit" value="Predict">
+    </form>
+
+    <!-- Script to handle form submission and display the prediction result -->
+    <script>
+        document.getElementById('predictionForm').onsubmit = function(event) {
+            event.preventDefault();
+
+            // Construct the data object from the form
+            var formData = {
+                features: {
+                    driverId: document.getElementById('driverId').value,
+                    qualiResultPosition: document.getElementById('qualiResultPosition').value,
+                    q1Msec: document.getElementById('q1Msec').value,
+                    q2Msec: document.getElementById('q2Msec').value,
+                    q3Msec: document.getElementById('q3Msec').value,
+                    driverExpYears: document.getElementById('driverExpYears').value,
+                    grid_penalty: document.getElementById('gridPenalty').checked ? 1 : 0
+                    
+                }
+            };
+
+            // Make the POST request to the /predict endpoint
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            }).then(response => response.json()).then(data => {
+                alert('Prediction: ' + data);
+            }).catch(error => console.error('Error:', error));
+        };
+    </script>
+</body>
+</html>
